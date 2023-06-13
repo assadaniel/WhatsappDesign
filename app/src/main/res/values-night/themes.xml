@@ -3,5 +3,8 @@
     <style name="Base.Theme.WhatsappDesign" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="backgroundColor"> #212121</item>
+        <item name="receivingMessage">@color/receiving_message_color_dark_mode</item>
+
     </style>
 </resources>

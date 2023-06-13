@@ -3,4 +3,5 @@
     <string name="nav_header_desc">User profile pic</string>
     <string name="nav_header_title">Daniel</string>
     <string name="nav_header_subtitle">The Pro</string>
+    <string name="floating_plus_description">Add a contact</string>
 </resources>
