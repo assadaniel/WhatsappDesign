@@ -1,31 +1,105 @@
 package com.example.whatsappdesign;
 
 public class User {
-    private String userName;
-    private int pictureId;
-    private String lastMassage;
-    private String lastMassageSendingTime;
 
-    public User(String userName, int pictureId, String lastMassage, String lastMassageSendingTime) {
-        this.userName = userName;
-        this.pictureId = pictureId;
-        this.lastMassage = lastMassage;
-        this.lastMassageSendingTime = lastMassageSendingTime;
+   private int id;
+   private UserNoPassword user;
+   private MessageDetails lastMessage;
+
+    public User(int id, UserNoPassword user, MessageDetails lastMessage) {
+        this.id = id;
+        this.user = user;
+        this.lastMessage = lastMessage;
     }
 
-    public int getPictureId() {
-        return pictureId;
+    public User(UserDataFromAdd userDataFromAdd) {
+        this.id = userDataFromAdd.getId();
+        this.user = userDataFromAdd.getUser();
+        this.lastMessage = null;
     }
 
-    public String getLastMassage() {
-        return lastMassage;
+    public int getId() {
+        return id;
     }
 
-    public String getLastMassageSendingTime() {
-        return lastMassageSendingTime;
+    public UserNoPassword getUser() {
+        return user;
     }
 
-    public String getUserName() {
-        return userName;
+    public MessageDetails getLastMessage() {
+        return lastMessage;
     }
+
+    class UserNoPassword {
+       private String username;
+       private String displayName;
+       private String profilePic;
+
+
+       public UserNoPassword(String username, String displayName, String profilePic) {
+           this.username = username;
+           this.displayName = displayName;
+           this.profilePic = profilePic;
+       }
+
+       public String getUsername() {
+           return username;
+       }
+
+       public void setUsername(String username) {
+           this.username = username;
+       }
+
+       public String getDisplayName() {
+           return displayName;
+       }
+
+       public void setDisplayName(String displayName) {
+           this.displayName = displayName;
+       }
+
+       public String getProfilePic() {
+           return profilePic;
+       }
+
+       public void setProfilePic(String profilePic) {
+           this.profilePic = profilePic;
+       }
+   }
+
+   class MessageDetails{
+       private int id;
+       private String created;
+       private String content;
+
+       public MessageDetails(int id, String created, String content) {
+           this.id = id;
+           this.created = created;
+           this.content = content;
+       }
+
+       public int getId() {
+           return id;
+       }
+
+       public void setId(int id) {
+           this.id = id;
+       }
+
+       public String getCreated() {
+           return created;
+       }
+
+       public void setCreated(String created) {
+           this.created = created;
+       }
+
+       public String getContent() {
+           return content;
+       }
+
+       public void setContent(String content) {
+           this.content = content;
+       }
+   }
 }

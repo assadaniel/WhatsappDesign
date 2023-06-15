@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
-
+    tools:context=".AddUserActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,28 +17,18 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <EditText
-            android:id="@+id/loginusername"
+            android:id="@+id/adduserusername"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="@string/username" />
+            android:hint="@string/enter_username_to_add" />
 
-        <EditText
-            android:id="@+id/loginpassword"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="@string/password"
-            android:inputType="textPassword"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/errorMessageLogin"
-            android:visibility="gone"
-            android:textColor="@color/red"/>
+
+
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/ButtonAddUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"/>
+            android:text="@string/add"/>
 
 
     </LinearLayout>

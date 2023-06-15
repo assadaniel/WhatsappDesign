@@ -1,4 +1,6 @@
 package com.example.whatsappdesign;
+import static com.example.whatsappdesign.UsersActivity.setAsImage;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
+
 public class UserAdapter extends ArrayAdapter<User> {
     LayoutInflater inflater;
-
-    public UserAdapter(Context ctx, ArrayList<User> userArrayList) {
+    List<User> userList;
+    public UserAdapter(Context ctx, List<User> userArrayList) {
         super(ctx, R.layout.custom_list_item, userArrayList);
-
+        this.userList = userArrayList;
         this.inflater = LayoutInflater.from(ctx);
     }
 
@@ -35,12 +39,18 @@ public class UserAdapter extends ArrayAdapter<User> {
         TextView userName = convertView.findViewById(R.id.user_name);
         TextView lastMsg = convertView.findViewById(R.id.last_massage);
         TextView time = convertView.findViewById(R.id.time);
-
-        imageView.setImageResource(user.getPictureId());
-        userName.setText(user.getUserName());
-        lastMsg.setText(user.getLastMassage());
-        time.setText(user.getLastMassageSendingTime());
+        if(user.getLastMessage()==null) {
+            lastMsg.setText("");
+            time.setText("");
+        } else {
+            lastMsg.setText(user.getLastMessage().getContent());
+            time.setText(user.getLastMessage().getCreated());
+        }
+        setAsImage(user.getUser().getProfilePic(),imageView);
+        userName.setText(user.getUser().getDisplayName());
 
         return convertView;
     }
+
+
 }

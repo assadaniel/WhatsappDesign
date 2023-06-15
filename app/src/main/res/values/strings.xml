@@ -14,4 +14,11 @@
     <string name="select_profile_picture">Select Profile Picture</string>
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
+    <string name="username_already_taken_or_error">Username already taken or error</string>
+    <string name="error_with_request_to_server">Error with request to server</string>
+    <string name="already_registered">Already Registered</string>
+    <string name="invalid_username_or_password">Invalid username or password</string>
+    <string name="request_to_server_failed">Request to server failed</string>
+    <string name="enter_username_to_add">Enter username to add</string>
+    <string name="add">Add</string>
 </resources>
