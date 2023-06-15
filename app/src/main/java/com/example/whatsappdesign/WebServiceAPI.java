@@ -17,11 +17,21 @@ public interface WebServiceAPI {
     Call<String> getToken(@Body UserCreateToken userCreateToken);
 
     @GET("Users/{id}")
-    Call<UserCreatePost> getUser(@Path("id") String id, @Header("Authorization") String authHeader);
+    Call<UserCreatePost> getUser(@Path("id") String id,
+                                 @Header("Authorization") String authHeader);
 
     @GET("Chats")
     Call<List<User>> getUsers(@Header("Authorization") String authHeader);
 
     @POST("Chats")
-    Call<UserDataFromAdd> addChat(@Body OnlyUsername onlyUsername, @Header("Authorization") String authHeader);
+    Call<UserDataFromAdd> addChat(@Body OnlyUsername onlyUsername,
+                                  @Header("Authorization") String authHeader);
+
+    @GET("Chats/{id}/Messages")
+    Call<List<Message>> getMessages(@Path("id") int id,
+                                    @Header("Authorization") String authHeader);
+
+    @POST("Chats/{id}/Messages")
+    Call<Void> postMessage(@Path("id") int id,@Body MessageToSend message,
+                           @Header("Authorization") String authHeader);
 }

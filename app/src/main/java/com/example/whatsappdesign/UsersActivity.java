@@ -41,7 +41,7 @@ public class UsersActivity extends AppCompatActivity {
     UserAdapter adapter;
     ImageView settings;
     public static String token;
-    String currentConnectedUsername;
+    public static String currentConnectedUsername;
     ImageView pfpCurrentLoggedIn;
     TextView displayNameCurrentLoggedIn;
     private UsersViewModel viewModel;
@@ -86,8 +86,9 @@ public class UsersActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
                 User u = viewModel.get(position);
-                intent.putExtra("displayName", u.getUser().getUsername());
+                intent.putExtra("displayName", u.getUser().getDisplayName());
                 intent.putExtra("profilePic",u.getUser().getProfilePic());
+                intent.putExtra("id",u.getId());
                 startActivity(intent);
             }
 

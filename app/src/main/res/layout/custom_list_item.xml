@@ -41,7 +41,7 @@
                     android:textSize="25sp"
                     android:textStyle="bold"
                     tools:text="User"
-
+                    android:textColor="@color/purple"
 
                     />
 
@@ -52,6 +52,7 @@
                     tools:text="Hi, how are you?"
                     android:textSize="17sp"
                     android:layout_marginTop="3dp"
+                    android:textColor="@color/purple"
 
                     />
 
@@ -67,6 +68,8 @@
             android:textSize="15sp"
             android:padding="15dp"
             android:layout_alignParentRight="true"
+            android:textColor="@color/purple"
+
             />
 
     </RelativeLayout>

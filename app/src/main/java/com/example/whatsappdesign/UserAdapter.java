@@ -1,4 +1,6 @@
 package com.example.whatsappdesign;
+import static com.example.whatsappdesign.ChatAdapter.formatDateToString;
+import static com.example.whatsappdesign.ChatAdapter.parseDateString;
 import static com.example.whatsappdesign.UsersActivity.setAsImage;
 
 import android.content.Context;
@@ -14,11 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserAdapter extends ArrayAdapter<User> {
     LayoutInflater inflater;
     List<User> userList;
+    private static String inputFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    private static String outputFormat = "HH:mm";
     public UserAdapter(Context ctx, List<User> userArrayList) {
         super(ctx, R.layout.custom_list_item, userArrayList);
         this.userList = userArrayList;
@@ -44,7 +49,9 @@ public class UserAdapter extends ArrayAdapter<User> {
             time.setText("");
         } else {
             lastMsg.setText(user.getLastMessage().getContent());
-            time.setText(user.getLastMessage().getCreated());
+            Date date = parseDateString(user.getLastMessage().getCreated(), inputFormat);
+            String formattedTime = formatDateToString(date, outputFormat);
+            time.setText(formattedTime);
         }
         setAsImage(user.getUser().getProfilePic(),imageView);
         userName.setText(user.getUser().getDisplayName());

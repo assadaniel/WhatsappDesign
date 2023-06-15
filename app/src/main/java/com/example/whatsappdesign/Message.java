@@ -1,25 +1,46 @@
 package com.example.whatsappdesign;
 
 public class Message {
-    private String text;
-    private String time;
-    private boolean isSender;
+    private int id;
+    private String content;
+    private String created;
+    private OnlyUsername sender;
 
-    public Message(String text, String time, boolean isSender) {
-        this.text = text;
-        this.time = time;
-        this.isSender = isSender;
+    public Message(String text, String time, OnlyUsername onlyUsername) {
+        this.content = text;
+        this.created = time;
+        this.sender = onlyUsername;
     }
 
-    public String getText() {
-        return text;
+    public int getId() {
+        return id;
     }
 
-    public String getTime() {
-        return time;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public boolean isSender() {
-        return isSender;
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public OnlyUsername getSender() {
+        return sender;
+    }
+
+    public void setSender(OnlyUsername sender) {
+        this.sender = sender;
     }
 }

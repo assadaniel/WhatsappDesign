@@ -1,6 +1,10 @@
 package com.example.whatsappdesign;
 
+import static com.example.whatsappdesign.UsersActivity.currentConnectedUsername;
+import static com.example.whatsappdesign.UsersActivity.setAsImage;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,12 +13,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -24,6 +33,14 @@ public class ChatActivity extends AppCompatActivity {
     private TextView textView;
     private ImageView backButton;
 
+    private MessagesViewModel viewModel;
+
+    private Button sendButton;
+
+    private EditText messageBox;
+
+    private int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,24 +49,27 @@ public class ChatActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageViewtalkingTo);
         textView = findViewById(R.id.textViewTalkingTo);
         backButton = findViewById(R.id.backButton);
+        sendButton = findViewById(R.id.sendButton);
+        messageBox = findViewById(R.id.editTextChat);
         Intent activityIntent = getIntent();
         if(activityIntent!=null) {
             String displayName = activityIntent.getStringExtra("displayName");
-            System.out.println(displayName);
-            Log.d("ChatActivity", "DisplayName: " + displayName);
-            int profilePic = activityIntent.getIntExtra("profilePic", R.drawable.ic_launcher_foreground);
+            id = activityIntent.getIntExtra("id",0);
+            String profilePic = activityIntent.getStringExtra("profilePic");
             textView.setText(displayName);
-           imageView.setImageResource(profilePic);
+           setAsImage(profilePic,imageView);
 
         }
+        viewModel = new ViewModelProvider(this).get(MessagesViewModel.class);
+        viewModel.init(id);
         // Initialize the message list with some example data
-        messageList = new ArrayList<>();
-        messageList.add(new Message("Hello", "10:00 AM", true));
-        messageList.add(new Message("Hi", "10:01 AM", false));
+//        messageList = new ArrayList<>();
+//        messageList.add(new Message("Hello", "10:00 AM", true));
+//        messageList.add(new Message("Hi", "10:01 AM", false));
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ChatAdapter(messageList);
+        adapter = new ChatAdapter(viewModel.get().getValue());
         recyclerView.setAdapter(adapter);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +79,29 @@ public class ChatActivity extends AppCompatActivity {
                 // For example, you can navigate back to the previous screen
                 finish();
             }
+        });
+        viewModel.get().observe(this,messageList->{
+            adapter.setMessages(messageList);
+        });
+
+        sendButton.setOnClickListener(v -> {
+            // Get the current time
+            Calendar currentTime = Calendar.getInstance();
+
+            // Extract the hour and minute values
+            int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = currentTime.get(Calendar.MINUTE);
+
+            // Format the hour and minute values as strings
+            String formattedHour = String.format(Locale.getDefault(), "%02d", hour);
+            String formattedMinute = String.format(Locale.getDefault(), "%02d", minute);
+
+            // Construct the formatted time string
+            String formattedTime = formattedHour + ":" + formattedMinute;
+            Message message = new Message(messageBox.getText().toString(),
+                    formattedTime,new OnlyUsername(currentConnectedUsername));
+            viewModel.add(new MessageToSend(message.getContent()));
+
         });
     }
 }
