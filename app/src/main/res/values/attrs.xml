@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="ds">
         <attr name="receivingMessage" format="color" />
+        <attr name="text_color" format="color"/>
     </declare-styleable>
 </resources>

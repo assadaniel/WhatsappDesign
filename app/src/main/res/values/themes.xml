@@ -3,9 +3,9 @@
     <style name="Base.Theme.WhatsappDesign" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="backgroundColor"> @color/white</item>
+<!--        <item name="backgroundColor"> @color/white</item>-->
         <item name="receivingMessage">@color/receiving_message_color_light_mode</item>
-
+        <item name="text_color">#000</item>
     </style>
 
 
