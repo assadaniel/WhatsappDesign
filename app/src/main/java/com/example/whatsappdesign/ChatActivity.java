@@ -82,25 +82,32 @@ public class ChatActivity extends AppCompatActivity {
         });
         viewModel.get().observe(this,messageList->{
             adapter.setMessages(messageList);
+            recyclerView.postDelayed(() -> {
+                if (messageList.size() > 0) {
+                    recyclerView.smoothScrollToPosition(messageList.size() - 1);
+                }
+            }, 100); // Delay of 100 milliseconds (adjust as needed)
         });
 
         sendButton.setOnClickListener(v -> {
-            // Get the current time
-            Calendar currentTime = Calendar.getInstance();
-
-            // Extract the hour and minute values
-            int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-            int minute = currentTime.get(Calendar.MINUTE);
-
-            // Format the hour and minute values as strings
-            String formattedHour = String.format(Locale.getDefault(), "%02d", hour);
-            String formattedMinute = String.format(Locale.getDefault(), "%02d", minute);
-
-            // Construct the formatted time string
-            String formattedTime = formattedHour + ":" + formattedMinute;
-            Message message = new Message(messageBox.getText().toString(),
-                    formattedTime,new OnlyUsername(currentConnectedUsername));
-            viewModel.add(new MessageToSend(message.getContent()));
+//            // Get the current time
+//            Calendar currentTime = Calendar.getInstance();
+//
+//            // Extract the hour and minute values
+//            int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+//            int minute = currentTime.get(Calendar.MINUTE);
+//
+//            // Format the hour and minute values as strings
+//            String formattedHour = String.format(Locale.getDefault(), "%02d", hour);
+//            String formattedMinute = String.format(Locale.getDefault(), "%02d", minute);
+//
+//            // Construct the formatted time string
+//            String formattedTime = formattedHour + ":" + formattedMinute;
+//            Message message = new Message(messageBox.getText().toString(),
+//                    formattedTime,new OnlyUsername(currentConnectedUsername));
+            viewModel.add(new MessageToSend(messageBox.getText().toString()));
+            messageBox.setText("");
+            recyclerView.smoothScrollToPosition(viewModel.get().getValue().size()-1);
 
         });
     }

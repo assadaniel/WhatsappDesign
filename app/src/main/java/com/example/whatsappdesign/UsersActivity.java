@@ -10,17 +10,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -39,18 +43,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UsersActivity extends AppCompatActivity {
     ListView listView;
     UserAdapter adapter;
-    ImageView settings;
+//    ImageView settings;
     public static String token;
     public static String currentConnectedUsername;
     ImageView pfpCurrentLoggedIn;
     TextView displayNameCurrentLoggedIn;
     private UsersViewModel viewModel;
     private FloatingActionButton addButton;
+    private ImageView menuButton;
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if(result.getResultCode()== Activity.RESULT_OK) {
                     Intent data = result.getData();
                     String username = data.getStringExtra("Username");
+                    List<User> userList = viewModel.get().getValue();
+                    for(User user: userList) {
+                        if(user.getUser().getUsername().equals(username)){
+                            Toast.makeText(getApplicationContext(),"User already added",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
                     viewModel.add(username,getApplicationContext());
 //                    Toast.makeText(getApplicationContext(),errorData.getErrorString(),
 //                            Toast.LENGTH_SHORT).show();
@@ -79,8 +92,9 @@ public class UsersActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_view);
         adapter = new UserAdapter(getApplicationContext(),viewModel.get().getValue());
         listView.setAdapter(adapter);
-        settings = findViewById(R.id.settingsButtton);
+//        settings = findViewById(R.id.settingsButtton);
         addButton = findViewById(R.id.btnAdd);
+        menuButton = findViewById(R.id.menuButton);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -93,13 +107,13 @@ public class UsersActivity extends AppCompatActivity {
             }
 
         });
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
+//        settings.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         viewModel.get().observe(this, users -> {
             adapter = new UserAdapter(getApplicationContext(),users);
@@ -110,6 +124,48 @@ public class UsersActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), AddUserActivity.class);
             launcher.launch(intent);
         });
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getApplicationContext(), v);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int itemId = item.getItemId();
+
+                        if (itemId == R.id.settingsItem) {
+                            // Handle settings button click
+                            Intent intent = new Intent(getApplicationContext(),
+                                    SettingsActivity.class);
+                            startActivity(intent);
+                            // TODO: Add your code here to handle the settings action
+                            return true;
+                        } else if (itemId == R.id.logoutItem) {
+                            // Handle logout button click
+                            // Clear the saved user information during logout
+                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.remove("username"); // Remove the saved username
+                            editor.remove("token"); // Remove the saved token
+                            editor.apply();
+                            Intent intent = new Intent(getApplicationContext(),
+                                    LoginActivity.class);
+                            startActivity(intent);
+                            // TODO: Add your code here to handle the logout action
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                });
+
+                popupMenu.show();
+            }
+        });
+
 
     }
 

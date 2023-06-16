@@ -4,11 +4,14 @@ import static com.example.whatsappdesign.MainActivity.baseURL;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -23,16 +26,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
     private EditText username, password;
     private TextView errors;
-    private Button loginButton;
+    private Button loginButton, signupButton;
+    private ImageView settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs",
+                Context.MODE_PRIVATE);
 
         username = findViewById(R.id.loginusername);
         password = findViewById(R.id.loginpassword);
         errors = findViewById(R.id.errorMessageLogin);
         loginButton = findViewById(R.id.loginButton);
+        signupButton = findViewById(R.id.signupinlogin);
+        settings = findViewById(R.id.settingsButttonLogin);
         loginButton.setOnClickListener(view -> {
             String usernameString = username.getText().toString().trim();
             String passwordString = password.getText().toString().trim();
@@ -51,8 +59,14 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(Call<String> call, Response<String> response) {
                     if(response.isSuccessful()){
                         Intent intent = new Intent(getApplicationContext(),UsersActivity.class);
-                        intent.putExtra("Token",response.body());
+                        String tokenNow = response.body();
+                        intent.putExtra("Token",tokenNow);
                         intent.putExtra("Username",usernameString);
+                        // Save the user information during login
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", usernameString); // Store the username
+                        editor.putString("token",tokenNow); // Store the token
+                        editor.apply();
                         startActivity(intent);
                     } else {
                         errors.setText(R.string.invalid_username_or_password);
@@ -66,6 +80,15 @@ public class LoginActivity extends AppCompatActivity {
                     errors.setVisibility(View.VISIBLE);
                 }
             });
+
+        });
+        signupButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+            startActivity(intent);
+        });
+        settings.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
         });
     }
 }

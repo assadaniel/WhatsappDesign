@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".SignupActivity">
+
     <ImageView
-        android:id="@+id/settingsButttonLogin"
+        android:id="@+id/settingsButttonSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -19,48 +20,81 @@
         android:src="@drawable/ic_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+         />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="20dp"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <EditText
-            android:id="@+id/loginusername"
+            android:id="@+id/usernameEditText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="@string/username" />
 
         <EditText
-            android:id="@+id/loginpassword"
+            android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="@string/password"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/passwordValidationEditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/displayNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="@string/display_name" />
+
+        <Button
+            android:id="@+id/profilePictureButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_profile_picture" />
+
+        <ImageView
+            android:id="@+id/profilePictureImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up" />
+
         <TextView
+            android:id="@+id/errorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/errorMessageLogin"
-            android:visibility="gone"
-            android:textColor="@color/red"/>
+            android:textColor="@color/red"
+            android:visibility="gone" />
+
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/alreadySignedIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"/>
-        <Button
-            android:id="@+id/signupinlogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up_here"/>
+            android:text="@string/already_registered" />
 
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

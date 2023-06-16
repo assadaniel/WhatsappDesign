@@ -31,17 +31,42 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginStart="8dp"/>
-
     <ImageView
-        android:id="@+id/settingsButtton"
+        android:id="@+id/menuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
-        android:contentDescription="Settings Button"
+        android:contentDescription="Menu Button"
         android:scaleX="1.7"
         android:scaleY="1.7"
-        android:src="@drawable/ic_settings"
+        android:src="@drawable/ic_somesettings"
         app:tint="@color/black" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/settingsButtton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginEnd="4dp"-->
+<!--        android:contentDescription="Settings Button"-->
+<!--        android:scaleX="1.6"-->
+<!--        android:scaleY="1.6"-->
+<!--        android:src="@drawable/ic_settings"-->
+<!--        app:tint="@color/black" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/logoutButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginEnd="11dp"-->
+<!--        android:layout_toStartOf="@+id/settingsButtton"-->
+<!--        android:contentDescription="Logout Button"-->
+<!--        android:scaleX="1.6"-->
+<!--        android:scaleY="1.6"-->
+<!--        android:src="@drawable/ic_logout"-->
+<!--        app:tint="@color/black" />-->
 </RelativeLayout>
