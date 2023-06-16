@@ -1,0 +1,29 @@
+/*
+ * The default style used in the page.
+ */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background-color: #b9ffff;
+}
+
+/*
+ * The log out button style.
+ */
+.log-out-button {
+    position: absolute;
+    background-color: red;
+    top: 2.5%;
+    right: 1.2%;
+}
+
+/*
+ * The style used for the add-user item.
+ */
+.add-user {
+    margin-left: 50%;
+    transform: scale(2);
+    cursor: pointer;
+}

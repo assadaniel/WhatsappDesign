@@ -1,0 +1,142 @@
+/*
+ * The style used for the list of users.
+ */
+.user-list-container {
+    flex: 1;
+    background-color: #60ff95;
+    padding: 20px;
+}
+
+/*
+ * The style used for the header of the user list.
+ */
+.user-list-container h2 {
+    margin-top: 20px;
+}
+
+/*
+ * The style used for the list of users.
+ * Used so we won't have the dots that are default in lists.
+ */
+#user-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow-y:scroll;
+    max-height:80%;
+}
+
+/*
+ * The style used for each item in the user list.
+ */
+li{
+    padding: 10px;
+    cursor: pointer;
+}
+
+/*
+ * The style used when you hover the inactive item.
+ */
+li:hover{
+    background-color: #87DDA4;
+}
+
+/*
+ * The style used for the container of each user
+ */
+.user-container {
+    display: flex;
+    align-items: center;
+
+}
+
+/*
+ * The style used for the chosen item in the user list.
+ */
+li.active {
+    background-color: #ddd;
+}
+
+/*
+ * The style used for the time and text next to each user.
+ */
+.user-last {
+    font-size: 10px;
+    float: right;
+    text-align: end;
+    word-break: break-word;
+    width: 70%;
+    height: 30px;
+    overflow: hidden;
+}
+
+
+/*
+ * The style used for the user profile picture and username.
+ */
+.profile-container {
+    top: 3%;
+    left: 1.5%;
+    display: flex;
+    resize: none;
+    overflow: hidden;
+    flex: 1;
+    align-items: center;
+}
+
+/*
+ * The style used for the profile picture.
+ */
+.profile-picture {
+    aspect-ratio : 1 / 1;
+    width: 15%;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/*
+ * The style used for the profile image inside the profile picture place.
+ */
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*
+ * The style of the user username.
+ */
+.profile-username {
+    display:inline-block;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/*
+ * The style used for the usernames in the Users list.
+ */
+.friend-username {
+    display:inline-block;
+    width: 50%;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/*
+ * The style used for the profile picture in chat.
+ */
+.chat-profile-picture {
+    aspect-ratio : 1 / 1;
+    width: 5%;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/*
+ * The style used for the profile image inside the profile picture place in chat.
+ */
+.chat-profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
