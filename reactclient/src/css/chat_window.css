@@ -1,0 +1,131 @@
+/*
+ * The style used for chat.
+ * displaying the users and the chat side by side.
+ */
+.chat-container {
+    display: flex;
+    height: 100vh;
+}
+
+/*
+ * The style used for the chosen chat part of the screen.
+ */
+.chat-window-container {
+    flex: 3;
+    width: 70%;
+    padding: 20px;
+}
+
+/*
+ * The style of the header of the chosen chat.
+ */
+.chat-window-container .chat-header {
+    margin-bottom: 2%;
+}
+
+/*
+ * The style of the text inside the header of the chosen text.
+ */
+.chat-window-container .chat-header h2 {
+    margin-top: 0;
+}
+
+/*
+ * The style of the screen of the chat.
+ */
+.chat-window-container #chat-window {
+    height: 80%;
+    padding: 1%;
+    overflow-y: scroll;
+    background-size: cover;
+    background-position: center;
+    background-image: url("https://i.pinimg.com/736x/ec/4f/bd/ec4fbdc68a0adbf603273d99d2d4dc3a.jpg");
+}
+
+
+/*
+ * The style of the messages in the chat.
+ */
+.chat-window-container .message {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.2%;
+    align-items: flex-end;
+    color: white;
+    max-width: 100%;
+}
+
+/*
+ * The style of the username that sent the message.
+ */
+.chat-window-container .message-sender {
+    font-weight: bold;
+}
+
+/*
+ * The style of the user texts.
+ */
+.chat-window-container .me {
+    align-self: flex-end;
+}
+
+/*
+ * The style of the other person texts.
+ */
+.chat-window-container .other {
+    align-self: flex-start;
+}
+
+/*
+ * The style of the default texts.
+ */
+.chat-window-container .default {
+    align-self: center;
+}
+
+/*
+ * The style of the text inside a message.
+ */
+.chat-window-container .message-text {
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 50%;
+    word-wrap: break-word;
+    white-space: pre-line;
+}
+
+/*
+ * The style of the bubble of the user messages.
+ * Green
+ */
+.chat-window-container .my-message .message-text {
+    background-color: #4CAF50;
+}
+
+/*
+ * The style of the bubble of the other person messages.
+ * Blue
+ */
+.chat-window-container .other-message .message-text {
+    background-color: #2196F3;
+}
+
+/*
+ * The style of the message the user wants to send.
+ */
+.chat-window-container form {
+    margin-top: 1%;
+    display: flex;
+}
+
+/*
+ * The style of the text part of the message the user wants to send.
+ */
+.chat-window-container form input {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
