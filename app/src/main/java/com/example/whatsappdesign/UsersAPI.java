@@ -41,7 +41,7 @@ public class UsersAPI {
                      List<User> userList = response.body();
                      User[] userArray = userList.toArray(new User[0]);
                      userDao.insert(userArray);
-                     userListData.postValue(userDao.index());
+                     userListData.postValue(userList);
                      }).start();
 
             }

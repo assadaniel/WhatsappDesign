@@ -118,16 +118,16 @@ public class UsersActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
-
-        viewModel.get().observe(this, users -> {
-            adapter = new UserAdapter(getApplicationContext(),users);
-            listView.setAdapter(adapter);
-        });
         addButton.setOnClickListener(v -> {
 
             Intent intent = new Intent(getApplicationContext(), AddUserActivity.class);
             launcher.launch(intent);
         });
+        viewModel.get().observe(this, users -> {
+            adapter = new UserAdapter(getApplicationContext(),users);
+            listView.setAdapter(adapter);
+        });
+
 
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override

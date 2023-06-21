@@ -6,6 +6,8 @@ import static com.example.whatsappdesign.UsersActivity.token;
 
 import static java.util.Collections.reverse;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.Calendar;
@@ -42,7 +44,6 @@ public class MessageAPI {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 new Thread(()->{
-                    messageChatDao.deleteAll();
                     List<Message> messages = response.body();
                     reverse(messages);
                     // Retrieve the existing MessageChat object with the given chatId
@@ -52,6 +53,7 @@ public class MessageAPI {
                         // Create a new MessageChat object if it doesn't exist
                         messageChat = new MessageChat(id);
                         messageChat.setListMessage(messages);
+                        Log.d("API", String.valueOf(id));
                         messageChatDao.insert(messageChat);
                     } else {
                         // Update the list of messages
@@ -72,33 +74,33 @@ public class MessageAPI {
         });
     }
 
-    public void add(int id,MessageToSend message) {
+    public void add(int id,MessageToSend message, List<Message> messageList1) {
         Call<Void> call = webServiceAPI.postMessage(id,message,"Bearer "+token);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 new Thread(()->{
-                    // Get the current time
-                    Calendar currentTime = Calendar.getInstance();
-
-                    // Extract the hour and minute values
-                    int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-                    int minute = currentTime.get(Calendar.MINUTE);
-
-                    // Format the hour and minute values as strings
-                    String formattedHour = String.format(Locale.getDefault(), "%02d", hour);
-                    String formattedMinute = String.format(Locale.getDefault(), "%02d", minute);
-
-                    // Construct the formatted time string
-                    String formattedTime = formattedHour + ":" + formattedMinute;
-                    Message realMessage = new Message(message.getMsg(),
-                            formattedTime,new OnlyUsername(currentConnectedUsername));
-                    List<Message> messageList1 = messageListData.getValue();
-                    messageList1.add(realMessage);
+//                    // Get the current time
+//                    Calendar currentTime = Calendar.getInstance();
+//
+//                    // Extract the hour and minute values
+//                    int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+//                    int minute = currentTime.get(Calendar.MINUTE);
+//
+//                    // Format the hour and minute values as strings
+//                    String formattedHour = String.format(Locale.getDefault(), "%02d", hour);
+//                    String formattedMinute = String.format(Locale.getDefault(), "%02d", minute);
+//
+//                    // Construct the formatted time string
+//                    String formattedTime = formattedHour + ":" + formattedMinute;
+//                    Message realMessage = new Message(message.getMsg(),
+//                            formattedTime,new OnlyUsername(currentConnectedUsername));
+//                    List<Message> messageList1 = messageListData.getValue();
+//                    messageList1.add(realMessage);
                     MessageChat messageChat = messageChatDao.get(id);
                     messageChat.setListMessage(messageList1);
                     messageChatDao.update(messageChat);
-                    messageListData.postValue(messageList1);
+//                    messageListData.postValue(messageList1);
                 }).start();
 
             }
