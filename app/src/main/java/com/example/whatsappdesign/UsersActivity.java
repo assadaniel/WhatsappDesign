@@ -155,7 +155,9 @@ public class UsersActivity extends AppCompatActivity {
                             editor.remove("username"); // Remove the saved username
                             editor.remove("token"); // Remove the saved token
                             editor.apply();
-                            LocalDB.userDB.clearAllTables();
+                            new Thread(()->{
+                                LocalDB.userDB.clearAllTables();
+                            }).start();
                             Intent intent = new Intent(getApplicationContext(),
                                     LoginActivity.class);
                             startActivity(intent);

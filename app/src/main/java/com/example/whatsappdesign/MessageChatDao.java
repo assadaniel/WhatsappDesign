@@ -11,16 +11,16 @@ import java.util.List;
 public interface MessageChatDao {
 
     @Query("SELECT * FROM messageChat")
-    List<Message> index();
+    List<MessageChat> index();
 
     @Query("SELECT * FROM messageChat WHERE chatId = :id")
-    Message get(int id);
+    MessageChat get(int id);
 
     @Insert
-    void insert(Message... message);
+    void insert(MessageChat... messageChats);
 
     @Update
-    void update(Message... message);
+    void update(MessageChat... messageChats);
 
     @Query("DELETE FROM messageChat")
     void deleteAll();

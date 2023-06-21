@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-@Entity
+@Entity(tableName = "user")
 @TypeConverters({UserNoPasswordConverter.class, MessageDetailsConverter.class})
 public class User {
 

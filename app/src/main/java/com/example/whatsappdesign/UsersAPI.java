@@ -35,7 +35,6 @@ public class UsersAPI {
         call.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                userListData.setValue(response.body());
                  new Thread(() -> {
                      userDao.deleteAll();
 //                     userDao.insert(response.body());
