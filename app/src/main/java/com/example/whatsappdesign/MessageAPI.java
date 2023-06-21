@@ -15,16 +15,24 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import com.example.whatsappdesign.MessageChatDao;
+import com.example.whatsappdesign.MessageChat;
+
 public class MessageAPI {
     private MutableLiveData<List<Message>> messageListData;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
 
-    public MessageAPI(MutableLiveData<List<Message>> messageListData) {
+    //////////////////////////
+    private MessageChatDao messageChatDao;
+
+    public MessageAPI(MutableLiveData<List<Message>> messageListData, MessageChatDao messageChatDao) {
         this.messageListData = messageListData;
         retrofit = new Retrofit.Builder().baseUrl(baseURL).
                 addConverterFactory(GsonConverterFactory.create()).build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
+//////////////////////
+        this.messageChatDao = messageChatDao;
     }
 
     public void get(int id) {

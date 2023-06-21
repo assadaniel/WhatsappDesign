@@ -1,8 +1,15 @@
 package com.example.whatsappdesign;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+@Entity
+@TypeConverters({UserNoPasswordConverter.class, MessageDetailsConverter.class})
 public class User {
 
-   private int id;
+    @PrimaryKey(autoGenerate = false)
+    private int id;
    private UserNoPassword user;
    private MessageDetails lastMessage;
 

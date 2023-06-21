@@ -10,16 +10,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import com.example.whatsappdesign.MessageChatDao;
+
 public class MessagesRepository {
     private MessageListData messageListData;
-
     private MessageAPI api;
-
     private int id;
+//////////////////////////
+    private MessageChatDao messageChatDao;
 
     public MessagesRepository(int id){
+        ////////////////////
+        MessageChatDB messageChatDB = LocalDB.messageChatDB;
+        messageChatDao = messageChatDB.messageChatDao();
+
         messageListData = new MessageListData();
-        api = new MessageAPI(messageListData);
+        /////////////////////////////
+        api = new MessageAPI(messageListData, messageChatDao);
         this.id = id;
     }
 
@@ -43,6 +50,13 @@ public class MessagesRepository {
         List<Message> messageList1 = messageListData.getValue();
         messageList1.add(realMessage);
         messageListData.setValue(messageList1);
+
+//        // Add the new message to the local database
+//        MessageChat messageChat = messageChatDao.get(id);
+//        if (messageChat != null) {
+//            messageChat.getListMessage().add(realMessage);
+//            messageChatDao.update(messageChat);
+//        }
     }
 
     class MessageListData extends MutableLiveData<List<Message>> {
@@ -54,6 +68,13 @@ public class MessagesRepository {
         @Override
         protected void onActive() {
             super.onActive();
+///////////////////
+            new Thread(() -> {
+//                messageListData.postValue(messageChatDao.index());
+                List<Message> messages = messageChatDao.index();
+                messageListData.postValue(messages);
+            }).start();
+
             api.get(id);
         }
     }
