@@ -1,5 +1,7 @@
 package com.example.whatsappdesign;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -21,7 +23,10 @@ public class MessagesViewModel extends ViewModel {
     }
 
     public LiveData<List<Message>> get() {return messages;}
-
+    public void refresh() {
+        Log.d("refresh2_abcde", "refresh2");
+        repository.refresh();
+    }
     public void add(MessageToSend message) {
         repository.add(message);
     }

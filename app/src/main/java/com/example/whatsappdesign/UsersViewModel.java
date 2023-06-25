@@ -21,7 +21,7 @@ public class UsersViewModel extends ViewModel {
     public User get(int position) {
         return users.getValue().get(position);
     }
-
+    public void refresh() {repository.refresh();}
     public void add(String username, Context context) {
        repository.add(username,context);
     }

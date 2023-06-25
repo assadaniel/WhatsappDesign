@@ -145,7 +145,7 @@ function Chat({setLoggedIn}) {
         })
         setStateArray({...stateArray, [currentUser]: {...stateArray[currentUser], lastMsg:msg, time:currTime()}})
         inputRef.current.value="";
-        socket.emit("send_message", {chat_id: id});
+        socket.emit("send_message", {chat_id: activeId, socket: socket.id, username: currentUser, message: msg});
 
     }
     // return false
@@ -207,7 +207,7 @@ function Chat({setLoggedIn}) {
         setShow(false);
         activeId = dictToAdd.chatId;
         activeUser = user;
-        socket.emit("send_message", {chat_id: 0});
+        socket.emit("send_message", {chat_id: 0, socket: socket.id, username: user, message: "new chat"});
     }
     async function upd(){
         const res = await fetch('http://localhost:5000/api/Chats/' + activeId + '/Messages', {

@@ -60,7 +60,11 @@ async function createChat(username, targetUsername) {
     };
     return result;
 }
-
+async function getUsernamesById(chatId) {
+    const chat = await Chat.findOne({ id: chatId })
+    console.log("async chat: " + chat.users);
+    return chat.users;
+}
 async function getChatById(chatId) {
     const chat = await Chat.findOne({ id: chatId })
         .populate('users', 'username displayName profilePic')
@@ -134,6 +138,7 @@ module.exports = {
     getChats,
     createChat,
     getChatById,
+    getUsernamesById,
     deleteChat,
     createMessage,
     getMessagesByChatId,

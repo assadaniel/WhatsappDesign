@@ -37,4 +37,7 @@ public class UsersRepository {
     public void add(String username,Context context){
         api.add(username, context);
     }
+    public void refresh() {
+        api.get();
+    }
 }
