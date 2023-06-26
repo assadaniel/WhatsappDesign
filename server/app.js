@@ -49,7 +49,11 @@ function addUserSocket(username, socketId) {
 
 // Function to get the socket ID for a given username
 function getSocketId(username) {
-    return userSocketMap[username];
+    if (userSocketMap[username]) {
+        return userSocketMap[username];
+    } else {
+        return null;
+    }
 }
 // Function to remove a pair based on the socket ID
 function removeUserSocketBySocketId(socketId) {
@@ -122,6 +126,9 @@ io.on("connection", (socket) => {
         console.log("hello");
         console.log("username: " + data.username);
         console.log("socket: " + socket.id);
+        if (getSocketId(data.username) != null) {
+            removeUserSocketBySocketId(getSocketId(data.username));
+        }
         addUserSocket(data.username, socket.id);
     });
     socket.on("send_message", (data) => {
