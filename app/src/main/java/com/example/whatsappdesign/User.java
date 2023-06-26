@@ -8,7 +8,7 @@ import androidx.room.TypeConverters;
 @TypeConverters({UserNoPasswordConverter.class, MessageDetailsConverter.class})
 public class User {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     private int id;
    private UserNoPassword user;
    private MessageDetails lastMessage;
