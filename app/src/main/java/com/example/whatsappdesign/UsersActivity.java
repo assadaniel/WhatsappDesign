@@ -123,12 +123,12 @@ public class UsersActivity extends AppCompatActivity {
 
             Intent intent = new Intent(getApplicationContext(), AddUserActivity.class);
             launcher.launch(intent);
+            viewModel.refresh();
         });
         viewModel.get().observe(this, users -> {
             adapter = new UserAdapter(getApplicationContext(),users);
             listView.setAdapter(adapter);
         });
-
 
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,6 +177,10 @@ public class UsersActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
     private void getDisplayNameAndProfilePicture() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
