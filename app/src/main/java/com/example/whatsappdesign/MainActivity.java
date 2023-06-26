@@ -144,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("Username",username);
             startActivity(intent);
         } else {
+            if(LocalDB.userDB != null){
+                new Thread(() ->{
+                    LocalDB.userDB.clearAllTables();
+                }).start();
+            }
             Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
             startActivity(intent);
         }
