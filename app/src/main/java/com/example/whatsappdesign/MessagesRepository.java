@@ -2,6 +2,8 @@ package com.example.whatsappdesign;
 
 import static com.example.whatsappdesign.UsersActivity.currentConnectedUsername;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -15,9 +17,9 @@ import com.example.whatsappdesign.MessageChatDao;
 public class MessagesRepository {
     private MessageListData messageListData;
     private MessageAPI api;
-    private int id;
-//////////////////////////
+    private int id = -1;
     private MessageChatDao messageChatDao;
+
 
     public MessagesRepository(int id){
         UserDB userDB = LocalDB.userDB;
@@ -81,6 +83,9 @@ public class MessagesRepository {
             api.get(id);
         }
     }
-
+    public void refresh() {
+        Log.d("abcde_refresh", String.valueOf(id));
+        api.get(id);
+    }
     public LiveData<List<Message>> getAll() {return messageListData;}
 }

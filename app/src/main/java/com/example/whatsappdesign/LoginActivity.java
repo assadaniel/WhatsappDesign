@@ -1,6 +1,7 @@
 package com.example.whatsappdesign;
 
 import static com.example.whatsappdesign.MainActivity.baseURL;
+import static com.example.whatsappdesign.MainActivity.SIM;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("username", usernameString); // Store the username
                         editor.putString("token",tokenNow); // Store the token
                         editor.apply();
+                        SIM.logIn(usernameString);
                         startActivity(intent);
                     } else {
                         errors.setText(R.string.invalid_username_or_password);

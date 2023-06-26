@@ -1,9 +1,11 @@
 package com.example.whatsappdesign;
 
+import static com.example.whatsappdesign.MainActivity.SIM;
 import static com.example.whatsappdesign.MainActivity.baseURL;
 import static com.example.whatsappdesign.UsersActivity.token;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -71,6 +73,12 @@ public class UsersAPI {
 
                     Toast.makeText(context,"Added "+username,
                             Toast.LENGTH_SHORT).show();
+                    Log.d("creating_chat_abcdef", "creating");
+                    if(SIM != null) {
+                        Log.d("creating_non_null_abcdef", "creating");
+                    }
+                    SIM.createChat(0,username);
+                    Log.d("created_abcdef", "created");
                 } else {
                     //errorData.setErrorString("Invalid username");
                     Toast.makeText(context,"Invalid username",

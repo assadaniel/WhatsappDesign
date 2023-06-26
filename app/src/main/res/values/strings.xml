@@ -29,4 +29,7 @@
     <string name="apply">Apply</string>
     <string name="changing_base_url_not_permitted">Changing the server base URL is only permitted from the signup page</string>
     <string name="settings_button">Settings Button</string>
+    <string name="msg_token_fmt">token: %1$s</string>
+    <string name="channel_name">firebaseChannel</string>
+    <string name="channel_description">firebase_notifcations_channel</string>
 </resources>

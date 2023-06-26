@@ -33,12 +33,12 @@ public class ChatActivity extends AppCompatActivity {
     private TextView textView;
     private ImageView backButton;
 
-    private MessagesViewModel viewModel;
+    private static MessagesViewModel viewModel;
 
     private Button sendButton;
 
     private EditText messageBox;
-
+    public static String talkingUser;
     private int id;
 
     @Override
@@ -55,6 +55,7 @@ public class ChatActivity extends AppCompatActivity {
         if(activityIntent!=null) {
             String displayName = activityIntent.getStringExtra("displayName");
             id = activityIntent.getIntExtra("id",0);
+            talkingUser = activityIntent.getStringExtra("username");
             String profilePic = activityIntent.getStringExtra("profilePic");
             textView.setText(displayName);
            setAsImage(profilePic,imageView);
@@ -80,14 +81,7 @@ public class ChatActivity extends AppCompatActivity {
                 finish();
             }
         });
-        viewModel.get().observe(this,messageList->{
-            adapter.setMessages(messageList);
-            recyclerView.postDelayed(() -> {
-                if (messageList.size() > 0) {
-                    recyclerView.smoothScrollToPosition(messageList.size() - 1);
-                }
-            }, 100); // Delay of 100 milliseconds (adjust as needed)
-        });
+
 
         sendButton.setOnClickListener(v -> {
 //            // Get the current time
@@ -110,5 +104,19 @@ public class ChatActivity extends AppCompatActivity {
             recyclerView.smoothScrollToPosition(viewModel.get().getValue().size()-1);
 
         });
+        viewModel.get().observe(this,messageList->{
+            adapter.setMessages(messageList);
+            recyclerView.postDelayed(() -> {
+                if (messageList.size() > 0) {
+                    recyclerView.smoothScrollToPosition(messageList.size() - 1);
+                }
+            }, 100); // Delay of 100 milliseconds (adjust as needed)
+        });
+    }
+    public static void update(){
+        Log.d("update_abcde","update");
+        if (viewModel != null) {
+            viewModel.refresh();
+        }
     }
 }

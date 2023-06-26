@@ -49,7 +49,7 @@ public class UsersActivity extends AppCompatActivity {
     public static String currentConnectedUsername;
     ImageView pfpCurrentLoggedIn;
     TextView displayNameCurrentLoggedIn;
-    private UsersViewModel viewModel;
+    private static UsersViewModel viewModel;
     private FloatingActionButton addButton;
     private ImageView menuButton;
     private UserDB userDB;
@@ -104,6 +104,7 @@ public class UsersActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
                 User u = viewModel.get(position);
+                intent.putExtra("username", u.getUser().getUsername());
                 intent.putExtra("displayName", u.getUser().getDisplayName());
                 intent.putExtra("profilePic",u.getUser().getProfilePic());
                 intent.putExtra("id",u.getId());
@@ -122,12 +123,12 @@ public class UsersActivity extends AppCompatActivity {
 
             Intent intent = new Intent(getApplicationContext(), AddUserActivity.class);
             launcher.launch(intent);
+            viewModel.refresh();
         });
         viewModel.get().observe(this, users -> {
             adapter = new UserAdapter(getApplicationContext(),users);
             listView.setAdapter(adapter);
         });
-
 
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +177,10 @@ public class UsersActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
     private void getDisplayNameAndProfilePicture() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -207,5 +212,8 @@ public class UsersActivity extends AppCompatActivity {
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             imageView.setImageBitmap(decodedByte);
         }
+    }
+    public static void update(){
+        viewModel.refresh();
     }
 }

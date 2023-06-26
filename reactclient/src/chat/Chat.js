@@ -67,7 +67,9 @@ function Chat({setLoggedIn}) {
             console.log(activeId);
             getUserChatsFromServer().then(setStateArray);
             if (activeId !== null) {
-                upd();
+                setTimeout(() => {
+                    upd();
+                }, 1000);
             }
         })
     }, [socket]);
@@ -145,7 +147,7 @@ function Chat({setLoggedIn}) {
         })
         setStateArray({...stateArray, [currentUser]: {...stateArray[currentUser], lastMsg:msg, time:currTime()}})
         inputRef.current.value="";
-        socket.emit("send_message", {chat_id: id});
+        socket.emit("send_message", {chat_id: activeId, socket: socket.id, username: currentUser, message: msg});
 
     }
     // return false
@@ -207,7 +209,7 @@ function Chat({setLoggedIn}) {
         setShow(false);
         activeId = dictToAdd.chatId;
         activeUser = user;
-        socket.emit("send_message", {chat_id: 0});
+        socket.emit("send_message", {chat_id: 0, socket: socket.id, username: user, message: "new chat"});
     }
     async function upd(){
         const res = await fetch('http://localhost:5000/api/Chats/' + activeId + '/Messages', {
@@ -297,6 +299,15 @@ function Chat({setLoggedIn}) {
         setLoggedIn(false);
         navigate('/login',{replace:true});
     }
+
+    let strToDisplay;
+    if(name_picture.profilePicture==="https://images-na.ssl-images-amazon.com/images/I/51e6kpkyuIL._AC_SX466_.jpg"){
+        console.log("in if with: " + name_picture.profilePicture);
+        strToDisplay=name_picture.profilePicture
+    } else {
+        console.log("in else with: " + name_picture.profilePicture);
+        strToDisplay = `data:image/jpeg;charset=utf-8;base64,${name_picture.profilePicture}`
+    }
     return (
         <>
             <title>Chat</title>
@@ -308,7 +319,7 @@ function Chat({setLoggedIn}) {
                     <div className="profile-container">
                         <div className="profile-picture">
                             <img
-                                src={`data:image/jpeg;charset=utf-8;base64,${name_picture.profilePicture}`}
+                                src={strToDisplay}
                                 className="rounded-circle" alt="Profile Picture"/>
                         </div>
 

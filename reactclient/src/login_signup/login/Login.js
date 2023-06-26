@@ -6,6 +6,7 @@ import {useState} from "react";
 
 
 import {name_picture} from '../../chat/Chat'
+import {socket} from "../../App";
 
 export var token;
 function Login({setLoggedIn}) {
@@ -48,6 +49,7 @@ function Login({setLoggedIn}) {
             setError(false);
             setLoggedIn(true);
             navigate('/chat',{replace:true});
+            socket.emit("logged_in", {socket: socket.id, username: json2.username});
             return;
         }
         // if(username in users) {
