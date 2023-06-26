@@ -142,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),UsersActivity.class);
             intent.putExtra("Token",tokenNow);
             intent.putExtra("Username",username);
+            SIM.connect(username);
+//            SIM.logIn(username);
             startActivity(intent);
         } else {
             if(LocalDB.userDB != null){
