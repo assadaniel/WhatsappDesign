@@ -42,7 +42,8 @@ public class MyService extends FirebaseMessagingService {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
                     .setContentTitle(title)
                     .setContentText(body)
-
+                    .setSmallIcon(R.drawable.defaultprofilepic)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setAutoCancel(true);
 
             // Check if the app has the required permission to post notifications
