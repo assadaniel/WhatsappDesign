@@ -157,4 +157,9 @@ public class SocketIOManager {
             socket.disconnect();
         }
     }
+    public void connect(String username) {
+        socket.disconnect();
+        socket.connect();
+        logIn(username);
+    }
 }
