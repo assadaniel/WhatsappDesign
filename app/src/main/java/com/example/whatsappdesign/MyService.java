@@ -42,6 +42,7 @@ public class MyService extends FirebaseMessagingService {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
                     .setContentTitle(title)
                     .setContentText(body)
+
                     .setAutoCancel(true);
 
             // Check if the app has the required permission to post notifications
@@ -50,9 +51,12 @@ public class MyService extends FirebaseMessagingService {
             }
 
             // Show the notification
+            Log.d("abcdf", "before_show_notification");
+
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             int notificationId = notificationIdCounter++;
             notificationManager.notify(notificationId, builder.build());
+            Log.d("abcdf", "notification");
             int a = 1;
         }
     }

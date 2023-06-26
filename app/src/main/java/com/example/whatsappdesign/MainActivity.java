@@ -85,8 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        createNotificationChannel();
+
         super.onCreate(savedInstanceState);
+        createNotificationChannel();
         SharedPreferences sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE);
         boolean isDarkModeEnabled = sharedPreferences.getBoolean("dark_mode_enabled", false);
         applyDarkMode(isDarkModeEnabled);
@@ -114,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-
 //        FirebaseMessaging.getInstance().getToken()
 //                .addOnCompleteListener(new OnCompleteListener<String>() {
 //                    @Override

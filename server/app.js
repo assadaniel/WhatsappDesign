@@ -9,10 +9,17 @@ const request = require('sync-request')
 const serviceAccount = require('./serviceKey.json'); // Path to your service account key
 const { initializeApp } = require('firebase-admin/app');
 const projectId = serviceAccount.project_id; // Extract project ID from the service account key
+// const app2 = initializeApp();
+// const myRefreshToken = admin.credential.cert(serviceAccount); // Get refresh token from OAuth2 flow
+
+// initializeApp({
+//     credential: refreshToken(myRefreshToken),
+//     databaseURL: "https://whatsappdesign-8f293.firebaseio.com"
+// });
 // let res1 = request('POST',"https://securetoken.googleapis.com/v1/token?key=AIzaSyCE3Omjyo8Oqix-Uh04evpu9kIvw2Zs-FM" );
 // console.log(res1);
 // admin.auth().getUser()
-const myRefreshToken = '...';
+// const myRefreshToken = '...myRefreshToken';
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://whatsappdesign-8f293.firebaseio.com",
@@ -159,6 +166,14 @@ io.on("connection", (socket) => {
 });
 
 // Send push notification using Firebase Cloud Messaging (FCM)
+// const admin = require('firebase-admin');
+
+// Initialize the Firebase Admin SDK with your service account credentials
+// const serviceAccount = require('/path/to/serviceAccountKey.json'); // Update with the path to your service account JSON file
+// admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount),
+// });
+
 async function sendPushNotification(recipient, message) {
     try {
         // Create the notification payload
@@ -177,6 +192,25 @@ async function sendPushNotification(recipient, message) {
         console.error('Error sending push notification:', error);
     }
 }
+
+// async function sendPushNotification(recipient, message) {
+//     try {
+//         // Create the notification payload
+//         const payload = {
+//             notification: {
+//                 title: 'New Message',
+//                 body: message,
+//             },
+//         };
+//
+//         // Send the notification to the recipient token
+//         const response = await admin.messaging().sendToDevice(recipient, payload);
+//
+//         console.log('Push notification sent successfully:', response);
+//     } catch (error) {
+//         console.error('Error sending push notification:', error);
+//     }
+// }
 server.listen(process.env.PORT_COMMUNICATION, () => {})
 
 // Middleware
