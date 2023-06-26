@@ -11,10 +11,13 @@ import java.util.List;
 public class UsersRepository {
     private UserListData userListData;
     private UsersAPI api;
+    private UserDao userDao;
 
-    public UsersRepository(){
+    public UsersRepository() {
+         UserDB userDB = LocalDB.userDB;
+         userDao = userDB.userDao();
         userListData = new UserListData();
-        api = new UsersAPI(userListData);
+        api = new UsersAPI(userListData, userDao);
     }
 
     class UserListData extends MutableLiveData<List<User>> {
@@ -26,7 +29,12 @@ public class UsersRepository {
         @Override
         protected void onActive() {
             super.onActive();
+            new Thread(() -> {
+                userListData.postValue(userDao.index());
+            }).start();
             api.get();
+
+
         }
     }
 

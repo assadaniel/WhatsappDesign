@@ -12,21 +12,26 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import com.example.whatsappdesign.MessageChatDao;
+
 public class MessagesRepository {
     private MessageListData messageListData;
-
     private MessageAPI api;
-
     private int id = -1;
+    private MessageChatDao messageChatDao;
+
 
     public MessagesRepository(int id){
+        UserDB userDB = LocalDB.userDB;
+        messageChatDao = userDB.messageChatDao();
+
         messageListData = new MessageListData();
-        api = new MessageAPI(messageListData);
+        api = new MessageAPI(messageListData, messageChatDao);
         this.id = id;
     }
 
     public void add(MessageToSend message) {
-        api.add(id,message);
+//        api.add(id,message);
         // Get the current time
         Calendar currentTime = Calendar.getInstance();
 
@@ -45,6 +50,15 @@ public class MessagesRepository {
         List<Message> messageList1 = messageListData.getValue();
         messageList1.add(realMessage);
         messageListData.setValue(messageList1);
+        api.add(id,message, messageList1);
+
+
+//        // Add the new message to the local database
+//        MessageChat messageChat = messageChatDao.get(id);
+//        if (messageChat != null) {
+//            messageChat.getListMessage().add(realMessage);
+//            messageChatDao.update(messageChat);
+//        }
     }
 
     class MessageListData extends MutableLiveData<List<Message>> {
@@ -56,6 +70,16 @@ public class MessagesRepository {
         @Override
         protected void onActive() {
             super.onActive();
+
+            new Thread(() -> {
+//                messageListData.postValue(messageChatDao.index());
+                //List<Message> messages = messageChatDao.index();
+                MessageChat messageChat = messageChatDao.get(id);
+                if(messageChat!=null) {
+                    messageListData.postValue(messageChat.getListMessage());
+                }
+            }).start();
+
             api.get(id);
         }
     }

@@ -22,12 +22,14 @@ public class UsersAPI {
     private MutableLiveData<List<User>> userListData;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
+    private UserDao userDao;
 
-    public UsersAPI(MutableLiveData<List<User>> userListData) {
+    public UsersAPI(MutableLiveData<List<User>> userListData, UserDao userDao) {
         this.userListData = userListData;
         retrofit = new Retrofit.Builder().baseUrl(baseURL).
                 addConverterFactory(GsonConverterFactory.create()).build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
+        this.userDao = userDao;
     }
 
     public void get(){
@@ -35,7 +37,15 @@ public class UsersAPI {
         call.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                userListData.setValue(response.body());
+                 new Thread(() -> {
+                     userDao.deleteAll();
+//                     userDao.insert(response.body());
+                     List<User> userList = response.body();
+                     User[] userArray = userList.toArray(new User[0]);
+                     userDao.insert(userArray);
+                     userListData.postValue(userList);
+                     }).start();
+
             }
 
             @Override
@@ -54,8 +64,12 @@ public class UsersAPI {
             public void onResponse(Call<UserDataFromAdd> call, Response<UserDataFromAdd> response) {
                 if(response.isSuccessful()){
                     List<User> users = userListData.getValue();
-                    users.add(new User(response.body()));
-                    userListData.setValue(users);
+                    User user = new User(response.body());
+                    users.add(user);
+                    new Thread(() -> {
+                        userDao.insert(user);
+                        userListData.postValue(users);
+                    }).start();
 
                     Toast.makeText(context,"Added "+username,
                             Toast.LENGTH_SHORT).show();

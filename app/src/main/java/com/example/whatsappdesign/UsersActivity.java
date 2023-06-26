@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
 
 import android.app.Activity;
 import android.content.Context;
@@ -51,6 +52,7 @@ public class UsersActivity extends AppCompatActivity {
     private static UsersViewModel viewModel;
     private FloatingActionButton addButton;
     private ImageView menuButton;
+    private UserDB userDB;
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if(result.getResultCode()== Activity.RESULT_OK) {
@@ -75,6 +77,8 @@ public class UsersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
+        userDB = Room.databaseBuilder(getApplicationContext(), UserDB.class, "UserDB").build();
+        LocalDB.userDB = userDB;
         displayNameCurrentLoggedIn = findViewById(R.id.textViewCurrentLoggedIn);
         pfpCurrentLoggedIn = findViewById(R.id.imageViewCurrentLoggedIn);
         Intent activityIntent = getIntent();
@@ -115,16 +119,16 @@ public class UsersActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
-
-        viewModel.get().observe(this, users -> {
-            adapter = new UserAdapter(getApplicationContext(),users);
-            listView.setAdapter(adapter);
-        });
         addButton.setOnClickListener(v -> {
 
             Intent intent = new Intent(getApplicationContext(), AddUserActivity.class);
             launcher.launch(intent);
         });
+        viewModel.get().observe(this, users -> {
+            adapter = new UserAdapter(getApplicationContext(),users);
+            listView.setAdapter(adapter);
+        });
+
 
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +156,9 @@ public class UsersActivity extends AppCompatActivity {
                             editor.remove("username"); // Remove the saved username
                             editor.remove("token"); // Remove the saved token
                             editor.apply();
+                            new Thread(()->{
+                                LocalDB.userDB.clearAllTables();
+                            }).start();
                             Intent intent = new Intent(getApplicationContext(),
                                     LoginActivity.class);
                             startActivity(intent);
