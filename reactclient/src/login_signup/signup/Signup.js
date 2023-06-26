@@ -232,9 +232,10 @@ function Signup() {
             pic_url = defaultProfilePicture;
         else {
             pic_url = await getBase64();
+            const prefixToRemove = "data:application/octet-stream;base64,";
+            pic_url = pic_url.substring(prefixToRemove.length)
         }
-        const prefixToRemove = "data:application/octet-stream;base64,";
-        pic_url = pic_url.substring(prefixToRemove.length)
+
         let newUser = {
             username: username, password: password1, displayName: displayname, profilePic: pic_url
         }

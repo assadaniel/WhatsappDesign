@@ -1,5 +1,6 @@
 package com.example.whatsappdesign;
 
+import static com.example.whatsappdesign.MainActivity.SIM;
 import static com.example.whatsappdesign.MainActivity.baseURL;
 import static com.example.whatsappdesign.UsersActivity.currentConnectedUsername;
 import static com.example.whatsappdesign.UsersActivity.token;
@@ -76,6 +77,7 @@ public class MessageAPI {
 
     public void add(int id,MessageToSend message, List<Message> messageList1) {
         Call<Void> call = webServiceAPI.postMessage(id,message,"Bearer "+token);
+        SIM.sendMessage(id, ChatActivity.talkingUser, message.getMsg());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
