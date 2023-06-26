@@ -112,6 +112,9 @@ public class SocketIOManager {
     public void logIn(String username){
         JSONObject messageObject = new JSONObject();
         try {
+            Log.d("zxcv_create", "Loging_in");
+            Log.d("zxcv_my_socket", id);
+            Log.d("zxcv_username", username);
             messageObject.put("socket", id);
             messageObject.put("username", username);
             socket.emit("logged_in", messageObject);
@@ -122,6 +125,8 @@ public class SocketIOManager {
     public void createChat(int activeId,String username){
         JSONObject messageObject = new JSONObject();
         try {
+            Log.d("zxcv_create", "creating_chat");
+            Log.d("zxcv_socket", id);
             messageObject.put("chat_id", activeId);
             messageObject.put("socket", id);
             messageObject.put("username", username);
