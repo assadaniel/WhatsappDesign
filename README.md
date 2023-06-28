@@ -37,6 +37,12 @@ This will run the chat app in the register window.
 
 Open the android studio app in the project directory.
 
+You can download the zip of the project, then in Android Studio open the WhatsappDesign-master folder (not just the app folder).
+
+It will look like this:
+![image](https://github.com/assadaniel/WhatsappDesign/assets/79274293/70279bdb-536e-402c-a2ff-4133fd9b2649)
+
+
 Then press the play button.
 
 ### To get notifications you need to go to the settings app in the phone and turn notifications permission on for the app.
